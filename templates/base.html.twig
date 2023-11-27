@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html class="no-js"  lang="en">
 
@@ -18,38 +17,38 @@
 		<title>Travel</title>
 
 		<!-- favicon img -->
-		<link rel="shortcut icon" type="image/icon" href="assets/logo/favicon.png"/>
+		<link rel="shortcut icon" type="image/icon" href="{{ asset('assets/logo/favicon.png') }}"/>
 
 		<!--font-awesome.min.css-->
-		<link rel="stylesheet" href="assets/css/font-awesome.min.css" />
+		<link rel="stylesheet" href="{{ asset('assets/css/font-awesome.min.css') }}" />
 
 		<!--animate.css-->
-		<link rel="stylesheet" href="assets/css/animate.css" />
+		<link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}" />
 
 		<!--hover.css-->
-		<link rel="stylesheet" href="assets/css/hover-min.css">
+		<link rel="stylesheet" href="{{ asset('assets/css/hover-min.css') }}">
 
 		<!--datepicker.css-->
-		<link rel="stylesheet"  href="assets/css/datepicker.css" >
+		<link rel="stylesheet"  href="{{ asset('assets/css/datepicker.css') }}" >
 
 		<!--owl.carousel.css-->
-        <link rel="stylesheet" href="assets/css/owl.carousel.min.css">
-		<link rel="stylesheet" href="assets/css/owl.theme.default.min.css"/>
+        <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
+		<link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}"/>
 
 		<!-- range css-->
-        <link rel="stylesheet" href="assets/css/jquery-ui.min.css" />
+        <link rel="stylesheet" href="{{ asset('assets/css/jquery-ui.min.css') }}" />
 
 		<!--bootstrap.min.css-->
-		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
 
 		<!-- bootsnav -->
-		<link rel="stylesheet" href="assets/css/bootsnav.css"/>
+		<link rel="stylesheet" href="{{ asset('assets/css/bootsnav.css') }}"/>
 
 		<!--style.css-->
-		<link rel="stylesheet" href="assets/css/style.css" />
+		<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
 
 		<!--responsive.css-->
-		<link rel="stylesheet" href="assets/css/responsive.css" />
+		<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
 
 		<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -91,16 +90,17 @@
 								</div><!-- /.navbar-header-->
 								<div class="collapse navbar-collapse">		  
 									<ul class="nav navbar-nav navbar-right">
-										<li class="smooth-menu"><a href="#home">home</a></li>
+										 <li><a href="{{path('app_index')}}">Home</a></li>
+
 										<li class="smooth-menu"><a href="#gallery">Destination</a></li>
 										<li class="smooth-menu"><a href="#pack">Packages </a></li>
 										<li class="smooth-menu"><a href="#spo">Special Offers</a></li>
 										<li class="smooth-menu"><a href="#blog">blog</a></li>
-										<li class="smooth-menu"><a href="#subs">subscription</a></li>
-										<li>
-											<button class="book-btn">book now
-											</button>
-										</li><!--/.project-btn--> 
+										 <li><a href="{{path('app_login')}}">Login</a></li>
+
+
+										<li class="smooth-menu"><a href="#spo">Special Offers</a></li>
+										
 									</ul>
 								</div><!-- /.navbar-collapse -->
 							</div><!-- /.main-menu-->
@@ -1576,7 +1576,7 @@
 
 
 
-		<script src="assets/js/jquery.js"></script>
+		<script src="{{ asset('assets/js/jquery.js') }}"></script>
 		<!-- Include all compiled plugins (below), or include individual files as needed -->
 
 		<!--modernizr.min.js-->
@@ -1584,34 +1584,34 @@
 
 
 		<!--bootstrap.min.js-->
-		<script  src="assets/js/bootstrap.min.js"></script>
+		<script  src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 
 		<!-- bootsnav js -->
-		<script src="assets/js/bootsnav.js"></script>
+		<script src="{{ asset('assets/js/bootsnav.js') }}"></script>
 
 		<!-- jquery.filterizr.min.js -->
-		<script src="assets/js/jquery.filterizr.min.js"></script>
+		<script src="{{ asset('assets/js/jquery.filterizr.min.js') }}"></script>
 
 		<script  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
 
 		<!--jquery-ui.min.js-->
-        <script src="assets/js/jquery-ui.min.js"></script>
+        <script src="{{ asset('assets/js/jquery-ui.min.js') }}"></script>
 
         <!-- counter js -->
-		<script src="assets/js/jquery.counterup.min.js"></script>
-		<script src="assets/js/waypoints.min.js"></script>
+		<script src="{{ asset('assets/js/jquery.counterup.min.js') }}"></script>
+		<script src="{{ asset('assets/js/waypoints.min.js') }}"></script>
 
 		<!--owl.carousel.js-->
-        <script  src="assets/js/owl.carousel.min.js"></script>
+        <script  src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
 
         <!-- jquery.sticky.js -->
-		<script src="assets/js/jquery.sticky.js"></script>
+		<script src="{{ asset('assets/js/jquery.sticky.js') }}"></script>
 
         <!--datepicker.js-->
-        <script  src="assets/js/datepicker.js"></script>
+        <script  src="{{ asset('assets/js/datepicker.js') }}"></script>
 
 		<!--Custom JS-->
-		<script src="assets/js/custom.js"></script>
+		<script src="{{ asset('assets/js/custom.js') }}"></script>
 
 
 	</body>

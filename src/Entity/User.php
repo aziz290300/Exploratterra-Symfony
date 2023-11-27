@@ -2,60 +2,86 @@
 
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-
-
-#[ORM\Entity(repositoryClass: userRepository::class)]
-
-class User
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="user")
+ */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private ?int $iduser = null;
+    private ?int $id = null;
 
     #[ORM\Column(length: 500)]
-    private ?string $nomuser = null;
-   
+    #[Assert\NotBlank(message: "Le champ nom est requis.")]
+    private ?string $username = null;
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "Le champ prénom est requis.")]
     private ?string $prenomuser = null;
-    
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "Le champ numéro de téléphone est requis.")]
     private ?string $numtel = null;
-    
 
     #[ORM\Column(length: 500)]
+    #[Assert\NotBlank(message: "Le champ email est requis.")]
+    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
+    #[Assert\Regex(pattern: "/@/", message: "L'email doit contenir le caractère '@'.")]
     private ?string $email = null;
-   
-
-    
-    #[ORM\Column(length: 500)]
-    private ?string $pwd = null;
-    
 
     #[ORM\Column(length: 500)]
-    private ?string $typeuser= null;
+    #[Assert\NotBlank(message: "Le champ mot de passe est requis.")]
+    private ?string $password= null;
 
-    public function getIduser(): ?int
+    #[ORM\Column(length: 500)]
+    private ?array $roles = null;
+    
+
+    #[ORM\Column(length: 500)]
+    private ?string $reset_token=null;
+
+    private ?UserPasswordEncoderInterface $encoder = null;
+
+    // ...
+
+    public function setEncoder(UserPasswordEncoderInterface $encoder)
     {
-        return $this->iduser;
+        $this->encoder = $encoder;
     }
 
-    public function getNomuser(): ?string
+    
+    public function getId(): ?int
     {
-        return $this->nomuser;
+        return $this->id;
     }
 
-    public function setNomuser(string $nomuser): static
+    public function setId(?int $id): static
     {
-        $this->nomuser = $nomuser;
-
+        $this->id = $id;
         return $this;
     }
+    
+
+    public function getUsername(): ?string
+    {
+        return $this->username;
+    }
+
+    public function setUsername(string $username): static
+{
+    $this->username = $username;
+
+    return $this;
+}
 
     public function getPrenomuser(): ?string
     {
@@ -93,31 +119,74 @@ class User
         return $this;
     }
 
-    public function getPwd(): ?string
+    public function getPassword(): ?string
     {
-        return $this->pwd;
+        return $this->password;
     }
 
-    public function setPwd(string $pwd): static
+    public function setPassword(string $password): static
+{
+    $this->password = $password;
+
+    return $this;
+}
+
+/**
+ * @ORM\PrePersist
+ */
+public function onPrePersist()
+{
+    // Encodez le mot de passe avant la persistance
+    $encodedPassword = $this->encoder->encodePassword($this, $this->getPassword());
+    $this->setPassword($encodedPassword);
+}
+
+
+public function getRoles(): array
     {
-        $this->pwd = $pwd;
+        $roles = $this->roles;
+        // guarantee every user at least has ROLE_USER
+        $roles[] = 'ROLE_USER';
+
+        return array_unique($roles);
+    }
+
+
+    public function setRoles(array $roles): self
+    {
+        $this->roles = $roles;
 
         return $this;
     }
 
-    public function getTypeuser(): ?string
+
+
+    public function getSalt(): ?string
     {
-        return $this->typeuser;
+        return null;
     }
 
-    public function setTypeuser(string $typeuser): static
-    {
-        $this->typeuser = $typeuser;
+    
 
-        return $this;
+    public function eraseCredentials(): void
+    {
+        // Supprimer les données sensibles
+        // Cette méthode est appelée après que l'authentification a eu lieu et que les informations sensibles doivent être effacées
     }
     
     
 
+ 
+    public function getResetToken()
+    {
+        return $this->reset_token;
+    }
 
+    /**
+     * @param mixed $reset_token
+     */
+    public function setResetToken($reset_token): void
+    {
+        $this->reset_token = $reset_token;
+    }
 }

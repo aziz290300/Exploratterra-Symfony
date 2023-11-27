@@ -1,0 +1,46 @@
+{% extends 'base-back.html.twig' %}
+
+{% block body %}
+    <br>
+    <br>
+    <table class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nom</th>
+                <th scope="col">Prenom</th>
+                <th scope="col">Num Tel</th>
+                <th scope="col">Email</th>
+                <th scope="col">Type User</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for utilisateur in utilisateurs %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ utilisateur.username }}</td>
+                    <td>{{ utilisateur.prenomuser }}</td>
+                    <td>{{ utilisateur.numtel }}</td>
+                    <td>{{ utilisateur.email }}</td>
+                    <td>
+    {% for role in utilisateur.roles %}
+        {{ role }}
+        {% if not loop.last %}, {% endif %}
+    {% endfor %}
+</td>
+
+                    <td>
+                        <a href="{{ path('delete_user', {'id': utilisateur.id}) }}" class="btn btn-danger btn-block"
+                            onclick="return confirm('Are you sure you want to delete this user?')">Delete</a>
+                        <a href="{{ path('edit_user', {'id': utilisateur.id}) }}" class="btn btn-primary btn-block">Edit</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-center">
+        <a href="{{ path('add_user') }}" class="btn btn-success btn-block">Add</a>
+    </div>
+{% endblock %}

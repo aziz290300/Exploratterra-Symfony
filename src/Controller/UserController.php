@@ -14,7 +14,29 @@ use Symfony\Component\Routing\Annotation\Route;
 class UserController extends AbstractController
 {
     #[Route('/user/utilisateur', name: 'app_list')]
-    public function index(): Response
+    public function index(EntityManagerInterface $entityManager): Response
+{
+    $userRepository = $entityManager->getRepository(User::class);
+    $utilisateurs = $userRepository->findAll();
+
+    return $this->render('admin/listUser.html.twig', [
+        'utilisateurs' => $utilisateurs,
+    ]);
+}
+
+#[Route('/user/delete/{id}', name: 'delete_user')]
+public function delete(User $user, EntityManagerInterface $entityManager): Response
+{
+    // Remove the user from the database
+    $entityManager->remove($user);
+    $entityManager->flush();
+
+    // Redirect to the user list page
+    return $this->redirectToRoute('app_list');
+}
+
+    #[Route('/index', name: 'app_index')]
+    public function index1(): Response
     {
         return $this->render('admin/index.html.twig', [
             'controller_name' => 'UserController',
@@ -23,7 +45,7 @@ class UserController extends AbstractController
     #[Route('/', name: 'index')]
     public function index2(): Response
     {
-        return $this->render('home/index.html.twig');
+        return $this->render('admin/index.html.twig');
     }
 
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
@@ -40,46 +62,80 @@ class UserController extends AbstractController
             return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('user/new.html.twig', [
+        return $this->renderForm('admin/new.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);
     }
 
-    #[Route('/{iduser}', name: 'app_user_show', methods: ['GET'])]
+    #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]
     public function show(User $user): Response
     {
-        return $this->render('user/show.html.twig', [
+        return $this->render('admin/new.html.twig', [
             'user' => $user,
         ]);
     }
 
-    #[Route('/{iduser}/edit', name: 'app_user_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
-    {
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+    
+    #[Route('/user/add', name: 'add_user')]
+public function add(Request $request, EntityManagerInterface $entityManager): Response
+{
+    $user = new User(); // Créer une nouvelle instance de l'entité User
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->flush();
+    // Créer un formulaire pour l'ajout d'utilisateur
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-        }
+    // Vérifier si le formulaire a été soumis et est valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Ajouter l'utilisateur à la base de données
+        $entityManager->persist($user);
+        $entityManager->flush();
 
-        return $this->renderForm('user/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
+        // Rediriger vers la liste des utilisateurs après l'ajout
+        return $this->redirectToRoute('app_list');
     }
 
-    #[Route('/{iduser}', name: 'app_user_delete', methods: ['POST'])]
-    public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    // Afficher le formulaire d'ajout d'utilisateur
+    return $this->render('admin/add_user.html.twig', [
+        'form' => $form->createView(),
+    ]);
+}
+#[Route('/user/edit/{id}', name: 'edit_user')]
+public function edit(User $user, Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Créer un formulaire pour la modification de l'utilisateur
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
+
+    // Vérifier si le formulaire a été soumis et est valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        // Mettre à jour l'utilisateur dans la base de données
+        $entityManager->flush();
+
+        // Rediriger vers la liste des utilisateurs après la modification
+        return $this->redirectToRoute('app_list');
+    }
+
+    // Afficher le formulaire de modification d'utilisateur
+    return $this->render('admin/edit_user.html.twig', [
+        'form' => $form->createView(),
+        'user' => $user,
+    ]);
+}
+
+
+    #[Route('/{id}', name: 'app_user_delete', methods: ['POST'])]
+    public function delete2(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$user->getIduser(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$user->getId(), $request->request->get('_token'))) {
             $entityManager->remove($user);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    
 }
+

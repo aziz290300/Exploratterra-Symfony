@@ -1,0 +1,54 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h2 class="text-center">Edit User</h2>
+
+                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                
+                <div class="form-group">
+                    {{ form_label(form.username, 'Nom') }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.username) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.prenomuser, 'Prenom') }}
+                    {{ form_widget(form.prenomuser, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.prenomuser) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.numtel, 'Num Tel') }}
+                    {{ form_widget(form.numtel, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.numtel) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.email, 'Email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.password, 'Password') }}
+                    {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.password) }}
+                </div>
+
+               
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                    <a href="{{ path('app_list') }}" class="btn btn-secondary btn-block">Cancel</a>
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -19,16 +19,21 @@
 
     </head>
     <body class="{{ body_class is defined ? body_class}}" id="page-top">
+    
             
         <div id="wrapper">
             
             {% include "admin/partials/sidebar.html.twig" %}
+            
            
             <div id="content-wrapper" class="d-flex flex-column">
-
+<a href="http://127.0.0.1:8000/" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+                        <i class="fas fa-arrow-right fa-sm text-white-50"></i> Aller à la partie Front
+                    </a>
                 <div id="content">
 
                     {% include "admin/partials/topbar.html.twig" %}
+                    
                     
                     <div class="container-fluid">
 

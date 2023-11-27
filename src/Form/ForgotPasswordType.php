@@ -2,25 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\Portefeuille;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class PortefeuilleType extends AbstractType
+class ForgotPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('solde')
-            ->add('iduser')
+            ->add('email')
         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Portefeuille::class,
+            // Configure your form options here
         ]);
     }
 }
