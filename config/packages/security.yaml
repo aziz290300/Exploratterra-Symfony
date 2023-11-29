@@ -17,12 +17,20 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            form_login:
-                login_path: app_login
-                check_path: app_login
-                username_parameter: '_email'
-                password_parameter: '_password'
-                enable_csrf: true  # Utiliser enable_csrf à la place de csrf_token_generator
+            custom_authenticator: App\Security\LoginFormAuthentificatorAuthenticator
+                                 
+            logout:
+                path: app_logout
+                target: /login
+                # where to redirect after logout
+                # target: app_any_route
+
+            remember_me:
+                secret: '%kernel.secret%'
+                lifetime: 604800
+                path: /
+                always_remember_me: true
+           
 when@test:
     security:
         password_hashers:

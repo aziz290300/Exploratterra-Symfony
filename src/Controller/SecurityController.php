@@ -1,96 +1,53 @@
 <?php
 
 namespace App\Controller;
+
 use App\Entity\User;
-use App\Form\UserType;
 use App\Form\ForgotPasswordType;
+use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
 use Swift_Mailer;
 use Swift_Message;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Doctrine\ORM\EntityManagerInterface;
-use Psr\Log\LoggerInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Endroid\QrCode\Builder\BuilderInterface;
-
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    
-    private $passwordEncoder;
-
-    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    #[Route('/security', name: 'app_security')]
+    public function index(): Response
     {
-        $this->passwordEncoder = $passwordEncoder;
-        
+        return $this->render('security/index.html.twig', [
+            'controller_name' => 'SecurityController',
+        ]);
     }
 
-    #[Route('/register', name: 'app_register', methods: ['GET', 'POST'], options: ['converter' => true])]
-   public function register(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
-{
-    $user = new User();
+    #[Route(path: '/login', name: 'app_login')]
+    public function login(AuthenticationUtils $authenticationUtils): Response
+    {
+        // if ($this->getUser()) {
+        //     return $this->redirectToRoute('target_path');
+        // }
 
-    $form = $this->createForm(UserType::class, $user);
+        // get the login error if there is one
+        $error = $authenticationUtils->getLastAuthenticationError();
+        // last username entered by the user
+        $lastUsername = $authenticationUtils->getLastUsername();
 
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-       
-
-        $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
-
-            // Set their role
-            $user->setRoles(['ROLE_USER']);
-
-        $entityManager->persist($user);
-        $entityManager->flush();
-
-       
-
-        return $this->redirectToRoute('app_login');
+        return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
     }
 
-   
-
-    return $this->render('security/register.html.twig', [
-        'form' => $form->createView(), // Assurez-vous de passer la variable form au rendu
-    ]);
-}
-
-    
-
-    #[Route('/login', name: 'app_login', methods: ['GET', 'POST'])]
-   public function login(Request $request, AuthenticationUtils $authenticationUtils,SessionInterface $session): Response
-{
-    // Si l'utilisateur est déjà connecté, redirigez-le vers la page d'accueil ou une autre page appropriée
-    //if ($this->getUser()) {
-//$session->getFlashBag()->add('success', 'Connexion réussie !');
-      //  return $this->redirectToRoute('app_index'); // Remplacez 'home' par la route appropriée
-   // }
-    $email = $request->request->get('_email');
-    $password = $request->request->get('_password');
-    $error = $authenticationUtils->getLastAuthenticationError();
-    $lastEmail = $authenticationUtils->getLastUsername();
-    dump($email,$password );
-    
-    return $this->render('security/login.html.twig', [
-        'last_email' => $lastEmail,
-        'error' => $error,
-        'page' => 'login',
-        'showRegisterForm' => true,
-    ]);
-}
-
-  
-    /**
+    #[Route(path: '/logout', name: 'app_logout')]
+    public function logout(): \Symfony\Component\HttpFoundation\RedirectResponse
+    {
+        return $this->redirectToRoute("app_login");
+    }
+ /**
      * @Route("/forgot", name="forgot")
      */
     #[Route('/forgot', name: 'forgot')]
