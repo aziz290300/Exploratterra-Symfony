@@ -7,7 +7,6 @@ knpu_oauth2_client:
             client_id: '%env(resolve:GOOGLE_CLIENT_ID)%'
             client_secret: '%env(resolve:GOOGLE_CLIENT_SECRET)%'
             # the route name you'll create
-            redirect_route: http://127.0.0.1:8000
+            redirect_route: connect_google_check
             redirect_params: { }
-         # the key "facebook_main" can be anything, it
-        # will create a service: "knpu.oauth2.client.facebook_main"
+         

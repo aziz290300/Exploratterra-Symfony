@@ -17,7 +17,10 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\LoginFormAuthentificatorAuthenticator
+            custom_authenticators:
+                - App\Security\GoogleAuthenticator
+                - App\Security\LoginFormAuthentificatorAuthenticator
+            entry_point: App\Security\LoginFormAuthentificatorAuthenticator
                                  
             logout:
                 path: app_logout
@@ -43,4 +46,7 @@ when@test:
                 cost: 4 # Lowest possible value for bcrypt
                 time_cost: 3 # Lowest possible value for argon
                 memory_cost: 10 # Lowest possible value for argon
+                 access_control:
+         #- { path: ^/user/utilisateur, roles: ROLE_ADMIN }
+       # { path: /index, Roles: "ROLE_USER" }
                 

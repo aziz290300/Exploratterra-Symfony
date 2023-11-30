@@ -3,115 +3,94 @@
 namespace App\Security;
 
 use App\Entity\User;
-use App\Entity\Profil;
-use App\Repository\UserRepository;
+
 use Doctrine\ORM\EntityManagerInterface;
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
-use KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator;
+use KnpU\OAuth2ClientBundle\Security\Authenticator\OAuth2Authenticator;
+use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
 use League\OAuth2\Client\Provider\GoogleUser;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
-use Symfony\Component\Security\Http\Authenticator\AuthenticatorInterface;
+use Symfony\Component\Security\Http\Authenticator\Passport\Badge\UserBadge;
+use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
+use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPassport;
+use Symfony\Component\Security\Http\EntryPoint\AuthenticationEntryPointInterface;
 
-/**
- * Created by IntelliJ IDEA
- * User : mert
- * Date : 12/18/17
- * Time: 12:00 PM
- */
-class GoogleAuthenticator extends \KnpU\OAuth2ClientBundle\Security\Authenticator\SocialAuthenticator
+class GoogleAuthenticator extends OAuth2Authenticator implements AuthenticationEntrypointInterface
 {
+    private ClientRegistry $clientRegistry;
+    private EntityManagerInterface $entityManager;
+    private RouterInterface $router;
 
-    private $clientRegistry;
-    private $em;
-    private $router;
-
-    public function  __construct(ClientRegistry $clientRegistry,EntityManagerInterface  $em , RouterInterface $router)
+    public function __construct(ClientRegistry $clientRegistry, EntityManagerInterface $entityManager, RouterInterface $router)
     {
-        $this->clientRegistry=$clientRegistry;
-        $this->em=$em;
-        $this->router=$router;
+        $this->clientRegistry = $clientRegistry;
+        $this->entityManager = $entityManager;
+        $this->router = $router;
+    }
 
+    public function supports(Request $request): ?bool
+    {
+        // continue ONLY if the current ROUTE matches the check ROUTE
+        return $request->attributes->get('_route') === 'connect_google_check';
     }
 
 
-    /**
-     * @inheritDoc
-     */
-    public function supports(Request $request)
+    public function authenticate(Request $request): Passport
     {
-        return $request->getPathInfo()=='http://127.0.0.1:8000'&&$request->isMethod('GET');
+        $client = $this->clientRegistry->getClient('google');
+
+        $accessToken = $this->fetchAccessToken($client);
+
+        return new SelfValidatingPassport(
+            new UserBadge($accessToken->getToken(), function () use ($accessToken, $client)
+            {
+                /** @var GoogleUser $googleUser */
+                $googleUser = $client->fetchUserFromToken($accessToken);
+
+                $email = $googleUser->getEmail();
+                
+                
+                $user = $this->entityManager->getRepository(User::class)->findOneBy(['email' => $email]);
+
+               
+
+                return $user;
+            })
+        );
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getCredentials(Request $request)
+    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
-       return $this->fetchAccessToken($this->getGoogleClient());
+        // change "app_homepage" to some route in your app
+        $targetUrl = $this->router->generate('app_index');
+
+        return new RedirectResponse($targetUrl);
+
+        // or, on success, let the request continue to be handled by the controller
+        //return null;
     }
 
-    /**
-     * @inheritDoc
-     */
-    public function getUser($credentials, UserProviderInterface $userProvider)
+    public function onAuthenticationFailure(Request $request, AuthenticationException $exception): ?Response
     {
-        /** @var GoogleUser $googleUser */
-        $googleUser = $this->getGoogleClient()
-            ->fetchUserFromToken($credentials);
-        $email = $googleUser->getEmail();
-        $user =$this->em->getRepository('App:User')
-            ->findOneBy(['email'=>$email]);
-       
-        return $user;
-    }
+        $message = strtr($exception->getMessageKey(), $exception->getMessageData());
 
-    /**
-     * @return \KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface
-     */
-    private function getGoogleClient(): \KnpU\OAuth2ClientBundle\Client\OAuth2ClientInterface
-    {
-        return $this->clientRegistry
-            ->getClient('google');
-    }
-    /**
-     * @inheritDoc
-     * @param Request $request The request that resulted in AuthenticationException
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $authException The exception that started
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    public function start(Request $request,\Symfony\Component\Security\Core\Exception\AuthenticationException $authException = null)
-    {
-        return new RedirectResponse('/login');
+        return new Response($message, Response::HTTP_FORBIDDEN);
     }
 
     /**
-     * @inheritDoc
-     * @param Request $request
-     * @param \Symfony\Component\Security\Core\Exception\AuthenticationException $exception
-     * @return \Symfony\Component\HttpFoundation\Response|null
+     * Called when authentication is needed, but it's not sent.
+     * This redirects to the 'login'.
      */
-    public function onAuthenticationFailure(Request $request, \Symfony\Component\Security\Core\Exception\AuthenticationException $exception)
+    public function start(Request $request, AuthenticationException $authException = null): Response
     {
-        // TODO: Implement onAuthenticationFailure() method.
+        return new RedirectResponse(
+            '/connect/', // might be the site, where users choose their oauth provider
+            Response::HTTP_TEMPORARY_REDIRECT
+        );
     }
-
-    /**
-     * @inheritDoc
-     * @param Request $request
-     * @param \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token
-     * @param string $providerKey The provider (i.e. firewall) key
-     * @return void
-     */
-    public function onAuthenticationSuccess(Request $request, \Symfony\Component\Security\Core\Authentication\Token\TokenInterface $token, $providerKey)
-    {
-        // TODO: Implement onAuthenticationSuccess() method.
-    }
-
-
-
-
 }

@@ -1,0 +1,36 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Search Results{% endblock %}
+
+{% block body %}
+    <h1>Search Results for "{{ searchTerm }}"</h1>
+    
+     <a href="{{ path('app_list') }}" style="text-decoration: none; color: #3498db;">Back to Search</a>
+
+    {% if user is not empty %}
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th style="border-bottom: 1px solid #ddd; padding: 8px;">username</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 8px;">prenomuser</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 8px;">numtel</th>
+                    <th style="border-bottom: 1px solid #ddd; padding: 8px;">email</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in user %}
+                    <tr>
+                        <td style="border-bottom: 1px solid #ddd; padding: 8px;">{{ user.username|replace({(searchTerm): '<span style="background-color: lightblue;">' ~ searchTerm ~ '</span>'})|raw }}</td>
+                        <td style="border-bottom: 1px solid #ddd; padding: 8px;">{{ user.prenomuser|replace({(searchTerm): '<span style="background-color: lightblue;">' ~ searchTerm ~ '</span>'})|raw }}</td>
+                        <td style="border-bottom: 1px solid #ddd; padding: 8px;">{{ user.numtel|replace({(searchTerm): '<span style="background-color: lightblue;">' ~ searchTerm ~ '</span>'})|raw }}</td>
+                        
+                        <td style="border-bottom: 1px solid #ddd; padding: 8px;">{{ user.email|replace({(searchTerm): '<span style="background-color: lightblue;">' ~ searchTerm ~ '</span>'})|raw }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>No user found for "{{ searchTerm }}".</p>
+    {% endif %}
+{% endblock %}

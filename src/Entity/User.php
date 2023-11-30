@@ -49,6 +49,45 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 500)]
     private ?string $reset_token=null;
 
+    /**
+ * @ORM\Column(type="boolean")
+ */
+private $enabled = true;
+
+// ...
+
+public function isEnabled(): bool
+{
+    return $this->enabled;
+}
+
+public function setEnabled(bool $enabled): self
+{
+    $this->enabled = $enabled;
+    return $this;
+}
+public function isAccountNonLocked(): bool
+{
+    return $this->enabled;
+}
+
+/**
+ * @see LockableInterface
+ */
+public function lock(): void
+{
+    $this->enabled = false;
+}
+
+/**
+ * @see LockableInterface
+ */
+public function unlock(): void
+{
+    $this->enabled = true;
+}
+
+
     private ?UserPasswordEncoderInterface $encoder = null;
 
     // ...

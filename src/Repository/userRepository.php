@@ -42,6 +42,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+        
     }
 
      
@@ -92,5 +93,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 //            ->getOneOrNullResult()
 //        ;
 //    }
+public function searchUser(string $searchTerm): array
+{
+    return $this->createQueryBuilder('U')
+        ->where('U.username LIKE :searchTerm')
+        ->orWhere('U.prenomuser LIKE :searchTerm')
+        ->orWhere('U.numtel LIKE :searchTerm')
+        ->orWhere('U.email LIKE :searchTerm')
+        
+        // Add more fields as needed
+        ->setParameter('searchTerm', '%' . $searchTerm . '%')
+        ->getQuery()
+        ->getResult();
+}
 }
 
