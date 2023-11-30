@@ -47,9 +47,7 @@ class SecurityController extends AbstractController
     {
         return $this->redirectToRoute("app_login");
     }
- /**
-     * @Route("/forgot", name="forgot")
-     */
+
     #[Route('/forgot', name: 'forgot')]
     public function forgotPassword(Request $request, UserRepository $userRepository,Swift_Mailer $mailer, TokenGeneratorInterface  $tokenGenerator)
     {
@@ -107,9 +105,7 @@ class SecurityController extends AbstractController
     }
     
 
-    /**
-     * @Route("/resetpassword/{token}", name="app_reset_password")
-     */
+    
     #[Route('/resetpassword/{token}', name: 'app_reset_password')]
     public function resetpassword(Request $request,string $token, UserPasswordEncoderInterface  $passwordEncoder)
     {

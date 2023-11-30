@@ -10,9 +10,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
     #[Route('/user/utilisateur', name: 'app_list')]
     public function index(EntityManagerInterface $entityManager): Response
 {
@@ -35,19 +42,46 @@ public function delete(User $user, EntityManagerInterface $entityManager): Respo
     return $this->redirectToRoute('app_list');
 }
 
-    #[Route('/index', name: 'app_index')]
-    public function index1(): Response
-    {
-        return $this->render('admin/index.html.twig', [
-            'controller_name' => 'UserController',
-        ]);
-    }
-    #[Route('/', name: 'index')]
-    public function index2(): Response
-    {
-        return $this->render('admin/index.html.twig');
+#[Route('/index', name: 'app_index')]
+public function index1(Request $request, EntityManagerInterface $entityManager): Response
+{
+    // Récupérer l'utilisateur actuel
+    $user = $this->getUser();
+
+    // Créer un formulaire pour la modification de l'utilisateur
+    $form = $this->createForm(UserType::class, $user);
+    $form->handleRequest($request);
+
+    // Vérifier si le formulaire a été soumis et est valide
+    if ($form->isSubmitted() && $form->isValid()) {
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
+
+        // Mettre à jour l'utilisateur dans la base de données
+        $entityManager->flush();
+
+        // Ajouter un message de succès dans la variable de session Flash
+        $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
+
+        // Rediriger vers la liste des utilisateurs après la modification
+        return $this->redirectToRoute('app_index');
     }
 
+    // Afficher le formulaire de modification d'utilisateur avec un éventuel message de succès
+    return $this->render('admin/index.html.twig', [
+        'form' => $form->createView(),
+        'user' => $user,
+    ]);
+}
+
+
+    #[Route('/', name: 'home')]
+    public function index2(): Response
+    {
+        return $this->render('admin/home.html.twig', [
+            
+            
+        ]);
+    }
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -111,7 +145,14 @@ public function edit(User $user, Request $request, EntityManagerInterface $entit
     // Vérifier si le formulaire a été soumis et est valide
     if ($form->isSubmitted() && $form->isValid()) {
         // Mettre à jour l'utilisateur dans la base de données
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
+
+        // Mettre à jour l'utilisateur dans la base de données
         $entityManager->flush();
+
+        // Ajouter un message de succès dans la variable de session Flash
+        $this->addFlash('success', 'Les modifications ont été enregistrées avec succès.');
+
 
         // Rediriger vers la liste des utilisateurs après la modification
         return $this->redirectToRoute('app_list');

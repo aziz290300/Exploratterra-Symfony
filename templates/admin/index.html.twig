@@ -1,14 +1,84 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
+    <div class="container rounded bg-white mt-5 mb-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="p-3">
+                   
+            <div class="col-md-3 border-right">
+             
+                <div class="d-flex flex-column align-items-center text-center p-3 py-5">
+                     {% if app.user is defined and app.user is not null %}
+                    <h4 class="text-left big "> welcom in your profile {{ app.user.username }}</h4>
+                {% else %}
+                    <p class="text-left big mb-0"> Bienvenue</p>
+                {% endif %}               
+                    <img class="rounded-circle mt-3" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
+                    <p class="text-black-50">{{ app.user.username }}</p>
+                    <p class="text-black-50">{{ app.user.prenomuser }}</p>
+                    <p class="text-black-50">{{ app.user.email }}</p>
+                    <p class="text-black-50">{{ app.user.numtel }}</p>
+                    <a href="{{ path('app_logout') }}" class="btn btn-danger text-left big mb-0">Déconnexion</a>
+                </div>
+            </div>
+        <div class="col-md-5 border-right">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-center big">Profile Settings</h4>
+                </div>
+                {# Afficher le message de succès s'il existe #}
+{% if app.session.flashbag.has('success') %}
+    {% for message in app.session.flashbag.get('success') %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+                                {{ form_start(form, {'attr': {'class': 'form'}}) }}
+                
+                <div class="form-group">
+                    {{ form_label(form.username, 'Change Your Name') }}
+                    {{ form_widget(form.username, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.username) }}
+                </div>
 
+                <div class="form-group">
+                    {{ form_label(form.prenomuser, 'Change Your LastName') }}
+                    {{ form_widget(form.prenomuser, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.prenomuser) }}
+                </div>
 
-	<h1>Bienvenue sur notre site !</h1> 
-     {% if app.user %}
-                                     
-                                        <div class="mb-3">
-                                            You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
-                                        </div>
-                                    {% endif %}
+                <div class="form-group">
+                    {{ form_label(form.numtel, 'Change Your Number') }}
+                    {{ form_widget(form.numtel, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.numtel) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.email, 'Change Your Email') }}
+                    {{ form_widget(form.email, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.email) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.password, 'Change Your Password') }}
+                    {{ form_widget(form.password, {'attr': {'class': 'form-control'}}) }}
+                    {{ form_errors(form.password) }}
+                </div>
+
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Save Changes</button>
+                    
+                </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+        <div class="col-md-4">
+            <div class="p-3 py-5">
+                <!-- Removed the section for editing experience -->
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
