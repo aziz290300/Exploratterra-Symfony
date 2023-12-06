@@ -10,16 +10,26 @@
              
                 <div class="d-flex flex-column align-items-center text-center p-3 py-5">
                      {% if app.user is defined and app.user is not null %}
-                    <h4 class="text-left big "> welcom in your profile {{ app.user.username }}</h4>
+                    <h class="text-left big"> welcome to your profile {{ app.user.username }} !</h>
+                    
                 {% else %}
                     <p class="text-left big mb-0"> Bienvenue</p>
                 {% endif %}               
                     <img class="rounded-circle mt-3" width="150px" src="https://st3.depositphotos.com/15648834/17930/v/600/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg">
-                    <p class="text-black-50">{{ app.user.username }}</p>
-                    <p class="text-black-50">{{ app.user.prenomuser }}</p>
-                    <p class="text-black-50">{{ app.user.email }}</p>
-                    <p class="text-black-50">{{ app.user.numtel }}</p>
-                    <a href="{{ path('app_logout') }}" class="btn btn-danger text-left big mb-0">Déconnexion</a>
+                    <p class="text-black-50">
+            <strong>Name:</strong> {{ app.user.username }}
+        </p>
+                    <p class="text-black-50">
+            <strong>LastName:</strong> {{ app.user.prenomuser }}
+        </p>
+                    <p class="text-black-50">
+            <strong>Email:</strong> {{ app.user.email }}
+        </p>
+                    <p class="text-black-50">
+            <strong>Number:</strong> {{ app.user.numtel}}
+        </p>
+                    <a href="{{ path('app_logout') }}" class="btn btn-danger text-left big mb-0">logout</a>
+                    
                 </div>
             </div>
         <div class="col-md-5 border-right">
@@ -74,9 +84,11 @@
             </div>
         </div>
     </div>
+    
         <div class="col-md-4">
             <div class="p-3 py-5">
                 <!-- Removed the section for editing experience -->
+                
             </div>
         </div>
     </div>

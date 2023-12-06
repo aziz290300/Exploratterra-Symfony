@@ -1,4 +1,6 @@
 {% extends 'base.html.twig' %}
+
+
 {% block header %}
 
 {% endblock %}
@@ -10,6 +12,7 @@
 {% block footer %}
 
 {% endblock %}
+
 {% block title %}Log in!{% endblock %}
 
 {% block body %}
@@ -47,7 +50,7 @@
                                             You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
                                         </div>
                                     {% endif %}
-                                    <div class="col-12">
+                                    <div class="col-12 mt-3">
                                         <label for="yourUsername" class="form-label">Email</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">📧</span>
@@ -56,7 +59,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="col-12">
+                                    <div class="col-14">
                                         <label for="yourPassword" class="form-label">Password</label>
                                         <div class="input-group has-validation">
                                             <span class="input-group-text" id="inputGroupPrepend">🔐</span>
@@ -74,18 +77,20 @@
                                         </div>
                                     </div>
                                     <div class="col-12">
-                                        <button class="btn btn-primary w-100" type="submit">Login</button>
-                                    </div>
-                                    <div class="col-12">
-                                        <p class="small mb-0">Don't have account? <a href="{{ path('registration') }}">Create an account</a></p>
-                                    </div>
-                                    <div class="col-12">
-                                 <a href="{{ path('forgot') }}">forgot password </a>
-                                 </div>
-                                 <div class="login-social-btn-area mb-0">
-                                            <a href="{{path('connect_google_start')}}" width="100%" class="social-btn last-child"><i class="fa fa-google"></i> <span>Login With Google</span></a>
-                                        </div>
-                                 
+    <button class="btn btn-primary w-100" type="submit">Login</button>
+</div>
+<div class="col-12">
+    <p class="small mb-0">Don't have an account? <a href="{{ path('registration') }}" class="text-decoration-none">Create an account</a></p>
+</div>
+<div class="col-12">
+    <a href="{{ path('forgot') }}" class="text-decoration-none">Forgot password</a>
+</div>
+<div class="login-social-btn-area mb-0">
+    <a href="{{ path('connect_google_start') }}" width="100%" class="social-btn last-child">
+        <i class="fa fa-google"></i> <span>Login With Google</span>
+    </a>
+</div>
+
                                 </form>
 
                             </div>
