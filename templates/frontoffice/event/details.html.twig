@@ -1,0 +1,86 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+<style>
+    .special-offer {
+        position: relative;
+        background: url({{ asset('uploads/' ~ e.image) }}) no-repeat center;
+        background-size: cover;
+        z-index: 1;
+    }
+    /* Autres styles CSS ici */
+</style>
+
+<section id="spo" class="special-offer">
+			<div class="container">
+				<div class="special-offer-content">
+					<div class="row">
+						<div class="col-sm-8">
+							<div class="single-special-offer">
+								<div class="single-special-offer-txt">
+									<h2>{{ e.nom}}</h2>
+									<div class="packages-review special-offer-review">
+										<p>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											
+										</p>
+									</div><!--/.packages-review-->
+									<div class="packages-para special-offer-para">
+										<p>
+											<span>
+												<i class="fa fa-angle-right"></i> {{ e.lieu}}
+											</span>
+											
+											<span>
+												<i class="fa fa-angle-right"></i>  {{ e.placesDispo }}
+											</span>
+										</p>
+										<p>
+											
+											 
+										</p>
+										<p class="offer-para">
+											{{ e.description  }}
+										</p>
+									</div><!--/.packages-para-->
+									<div class="offer-btn-group">
+										<div class="about-btn">
+											<a href="{{ path('app_event') }}" class="about-view packages-btn offfer-btn">
+											
+                                                retour
+											</a>
+										</div><!--/.about-btn-->
+										<div class="about-btn">
+											<a   href="{{ path('app_participant')}}"  class="btn btn-primary" >
+												Reserver
+											</a>
+										</div><!--/.about-btn-->
+									</div><!--/.offer-btn-group-->
+								</div><!--/.single-special-offer-txt-->
+							</div><!--/.single-special-offer-->
+						</div><!--/.col-->
+						<div class="col-sm-4">
+							<div class="single-special-offer">
+								<div class="single-special-offer-bg">
+									<img src="{{ asset('assets/images/offer/offer-shape.png') }}"  alt="offer-shape">
+								</div><!--/.single-special-offer-bg-->
+								<div class="single-special-shape-txt">
+									<h3>Evenement</h3>
+									<h4><span></span><br>{{ e.dateDebut ? e.dateDebut|date('Y-m-d') : '' }}</h4>
+									<p><span>{{ e.tarif }} dt</span></p>
+								</div><!--/.single-special-shape-txt-->
+							</div><!--/.single-special-offer-->
+						</div><!--/.col-->
+					</div><!--/.row-->
+				</div><!--/.special-offer-content-->
+			</div><!--/.container-->
+
+		</section><!--/.special-offer end-->
+		<!--special-offer end-->
+        {% endblock %}

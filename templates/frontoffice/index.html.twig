@@ -1,0 +1,97 @@
+
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome{% endblock %}
+
+{% block body %}
+
+<!--packages start-->
+
+
+<section id="pack" class="packages">
+    <div class="container">
+        <div class="gallary-header text-center">
+            <h2>
+                Vols : 
+            </h2>
+            <p>
+               liste des vols 
+            </p>
+        </div><!--/.gallery-header-->
+        
+        <div class="packages-content">
+            <div class="row">
+                {% for vol in vols %}
+                <div class="col-md-4 col-sm-6">
+                    <div class="single-package-item">
+                    {% if vol.imagePath is not null %}
+                        <img src="../uploads/{{ vol.imagePath }}" alt="package-place" height="345" width="229">
+                    {% else %}
+                      <img src="https://cdn.futura-sciences.com/buildsv6/images/largeoriginal/5/d/3/5d3c0362c7_116006_avion-vol-paris-new-york.jpg" alt="default-image" height="345" width="229">
+                    {% endif %}
+                        <div class="single-package-item-txt">
+                            <h3>{{ vol.numeroVol }} <span class="pull-right">{{ vol.compagnieAerienne }}</span></h3>
+                            <div class="packages-para">
+                                <p>
+                                    <span>
+                                        <i class="fa fa-angle-right"></i> {{ vol.dateDepart ? vol.dateDepart|date('Y-m-d') : '' }}
+                                    </span>
+                                    <i class="fa fa-angle-right"></i>  {{ vol.dateArrivee ? vol.dateArrivee|date('Y-m-d') : '' }}
+                                </p>
+                                <p>
+                                    <span>
+                                        <i class="fa fa-angle-right"></i>de {{ vol.LieuDepart }} à {{ vol.LieuArrivee }}
+                                    </span>
+                                    <i class="fa fa-angle-right"></i>  {{ vol.compagnieAerienne }}
+                                 </p>
+                            </div><!--/.packages-para-->
+                           
+                            <div class="about-btn">
+                                <button  class="about-view packages-btn">
+                                    book now
+                                </button>
+                            </div><!--/.about-btn-->
+                        </div><!--/.single-package-item-txt-->
+                    </div><!--/.single-package-item-->
+
+                </div><!--/.col-->
+                {% endfor %}
+
+            </div><!--/.row-->
+        </div><!--/.packages-content-->
+       
+    </div><!--/.container-->
+
+</section><!--/.packages-->
+<!--packages end-->
+
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>NumeroSiege</th>
+                <th>Prix</th>
+                <th>Classe</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for billet in billets %}
+            <tr>
+                <td>{{ billet.numeroSiege }}</td>
+                <td>{{ billet.prix }}</td>
+                <td>{{ billet.classe }}</td>
+                <td>
+                    <a href="{{ path('app_billet_show', {'id': billet.id}) }}">show</a>
+                    <a href="{{ path('app_billet_edit', {'id': billet.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

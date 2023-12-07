@@ -1,0 +1,46 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+    <h1>Evenement</h1>
+
+    <table class="table">
+        <tbody> 
+            <tr>
+                <th><img src="../uploads/{{ e.image }}" class="img-fluid" height="100" width="125"></th>
+                <td></td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ e.nom}}</td>
+            </tr>
+            <tr>
+                <th>DateDebut</th>
+                <td>{{ e.dateDebut ? e.dateDebut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ e.description  }}</td>
+            </tr>
+            <tr>
+                <th>Lieu</th>
+                <td>{{ e.lieu}}</td>
+            </tr>
+            <tr>
+                <th>Tarif</th>
+                <td>{{ e.tarif }}</td>
+            </tr>
+            <tr>
+                <th>Nombres Places Dispo </th>
+                <td>{{ e.placesDispo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_evenement_index') }}">back to list</a>
+
+    <a href="{{ path('app_evenement_edit', {'id': e.id}) }}">edit</a>
+
+    {{ include('backoffice/event/_delete_form.html.twig') }}
+{% endblock %}

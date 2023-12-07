@@ -8,6 +8,7 @@ use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
@@ -15,38 +16,54 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column(type: "integer")]
-    private ?int $id = null;
+    /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     */
+    private ?int $id;
 
-    #[ORM\Column(length: 500)]
-    #[Assert\NotBlank(message: "Le champ nom est requis.")]
+    /**
+     * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank(message="Le champ nom est requis.")
+     */
     private ?string $username = null;
 
-    #[ORM\Column(length: 500)]
-    #[Assert\NotBlank(message: "Le champ prénom est requis.")]
+    /**
+     * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank(message="Le champ prénom est requis.")
+     */
     private ?string $prenomuser = null;
 
-    #[ORM\Column(length: 500)]
-    #[Assert\NotBlank(message: "Le champ numéro de téléphone est requis.")]
+   /**
+     * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank(message="Le champ numéro de téléphone est requis.")
+     */
     private ?string $numtel = null;
 
-    #[ORM\Column(length: 500)]
-    #[Assert\NotBlank(message: "Le champ email est requis.")]
-    #[Assert\Email(message: "L'email '{{ value }}' n'est pas valide.")]
-    #[Assert\Regex(pattern: "/@/", message: "L'email doit contenir le caractère '@'.")]
+    /**
+     * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank(message="Le champ email est requis.")
+     * @Assert\Email(message="L'email '{{ value }}' n'est pas valide.")
+     * @Assert\Regex(pattern="/@/", message="L'email doit contenir le caractère '@'.")
+     */
     private ?string $email = null;
 
-    #[ORM\Column(length: 500)]
-    #[Assert\NotBlank(message: "Le champ mot de passe est requis.")]
+    /**
+     * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank(message="Le champ mot de passe est requis.")
+     */
     private ?string $password= null;
 
-    #[ORM\Column(length: 500)]
+   /**
+     * @ORM\Column(length=500, nullable=true)
+     */
     private ?array $roles = null;
     
 
-    #[ORM\Column(length: 500)]
+    /**
+     * @ORM\Column(type="string", length=500, nullable=true)
+     */
     private ?string $reset_token=null;
 
     /**

@@ -1,45 +1,98 @@
 {% extends 'base-back.html.twig' %}
 
 {% block title %}Reclamation index{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #myInput {
+            background-image: url('/css/searchicon.png');
+            background-position: 10px 12px;
+            background-repeat: no-repeat;
+            width: 100%;
+            font-size: 16px;
+            padding: 12px 20px 12px 40px;
+            border: 1px solid #ddd;
+            margin-bottom: 12px;
+        }
 
+        #table {
+            border-collapse: collapse;
+            width: 100%;
+            border: 1px solid #ddd;
+            font-size: 18px;
+        }
+
+        #table th, #table td {
+            text-align: left;
+            padding: 12px;
+        }
+
+        #table tr {
+            border-bottom: 1px solid #ddd;
+        }
+
+        #table tr.header, #table tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+{% endblock %}
 {% block body %}
     <h1>Reclamation index</h1>
-
-    <table class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Contenu</th>
-            <th>Email</th>
-            <th>Nom</th>
-            <th>Prénom</th>
-            <th>Téléphone</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for reclamation in reclamations %}
+    <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search ..">
+    <table class="table" id="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>ContenuReclamation</th>
+                <th>Type</th>
+                <th>actions</th>
+            </tr> 
+        </thead>
+        <tbody>
+        {% for reclamation in pagination  %}
             <tr>
                 <td>{{ reclamation.id }}</td>
-                <td>{{ reclamation.contenu }}</td>
-                <td>{{ reclamation.email }}</td>
-                <td>{{ reclamation.nom }}</td>
-                <td>{{ reclamation.prenom }}</td>
-                <td>{{ reclamation.telephone }}</td>
+                <td>{{ reclamation.contenuReclamation }}</td>
+                <td>{{ reclamation.typeReclamation }}</td>
                 <td>
-                  <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-info">Show</a>
-                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}" class="btn btn-warning">Edit</a>
-
+                    <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}">show</a>
+                    <a href="{{ path('app_reclamation_edit', {'id': reclamation.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="7">no records found</td>
+                <td colspan="3">no records found</td>
             </tr>
         {% endfor %}
-    </tbody>
-</table>
+        </tbody>
+    </table>
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
 
-<a href="{{ path('app_reclamation_new')}}" class="btn btn-success">Create new</a>
-   
+    <a href="{{ path('app_reclamation_new') }}">Create new</a>
+    <a href="{{ path('app_reclamation_export_excel') }}" class="btn btn-success">Export to Excel</a>
+    <script>
+        function myFunction() {
+          // Declare variables
+          var input, filter, table, tr, td, i, txtValue;
+          input = document.getElementById("myInput");
+          filter = input.value.toUpperCase();
+          table = document.getElementById("table");
+          tr = table.getElementsByTagName("tr");
+        
+          // Loop through all table rows, and hide those who don't match the search query
+          for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[1];
+            if (td) {
+              txtValue = td.textContent || td.innerText;
+              if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+              } else {
+                tr[i].style.display = "none";
+              }
+            }
+          }
+        }
+        </script>
 {% endblock %}

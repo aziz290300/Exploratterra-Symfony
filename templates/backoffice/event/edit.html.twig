@@ -1,0 +1,13 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Modifier Evenement{% endblock %}
+
+{% block body %}
+    <h1>Modifier Evenement</h1>
+
+    {{ include('backoffice/event/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_evenement_index') }}">back to list</a>
+
+    {{ include('backoffice/event/_delete_form.html.twig') }}
+{% endblock %}

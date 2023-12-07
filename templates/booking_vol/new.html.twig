@@ -1,0 +1,11 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New BookingVol{% endblock %}
+
+{% block body %}
+    <h1>Create new BookingVol</h1>
+
+    {{ include('booking_vol/_form.html.twig') }}
+
+    <a href="{{ path('app_booking_vol_index') }}">back to list</a>
+{% endblock %}

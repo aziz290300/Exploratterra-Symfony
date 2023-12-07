@@ -1,0 +1,11 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}New BookingRestaurant{% endblock %}
+
+{% block body %}
+    <h1>Create new BookingRestaurant</h1>
+
+    {{ include('booking_restaurant/_form.html.twig') }}
+
+    <a href="{{ path('app_booking_restaurant_index') }}">back to list</a>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Booking index{% endblock %}
+
+{% block body %}
+    <h1>Booking index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>User_id</th>
+                <th>StartDate</th>
+                <th>FinishDate</th>
+                <th>Nombre</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for booking in bookings %}
+            <tr>
+                <td>{{ booking.id }}</td>
+                <td>{{ booking.userId }}</td>
+                <td>{{ booking.startDate ? booking.startDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.finishDate ? booking.finishDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ booking.nombre }}</td>
+                <td>
+                    <a href="{{ path('app_booking_show', {'id': booking.id}) }}">show</a>
+                   
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

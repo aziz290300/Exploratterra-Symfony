@@ -92,14 +92,16 @@
 									<ul class="nav navbar-nav navbar-right">
 										 <li><a href="{{path('app_index')}}">Profile</a></li>
 
-										<li class="smooth-menu"><a href="#gallery">Events</a></li>
-										<li class="smooth-menu"><a href="#pack">Packages </a></li>
-										<li class="smooth-menu"><a href="#spo">Special Offers</a></li>
-										<li class="smooth-menu"><a href="#blog">blog</a></li>
+										<li><a href='{{ path('hotel_index') }}'>Hotel</a></li>
+										<li><a href='{{ path('vol_index') }}'>Vol </a></li>
+										<li><a href='{{ path('reclamation_new') }}'>Reclamation</a></li>
+										<li><a href='{{ path('app_event') }}'>Events</a></li>
 										 <li><a href="{{path('app_login')}}">Login</a></li>
+										 
 
 
-										<li class="smooth-menu"><a href="#spo">Special Offers</a></li>
+
+										<!--<li class="smooth-menu"><a href="#spo">Special Offers</a></li>-->
 										
 									</ul>
 								</div><!-- /.navbar-collapse -->
@@ -1515,12 +1517,13 @@
 							<div class="single-footer-item">
 								<h2>link</h2>
 								<div class="single-footer-txt">
-									<p><a href="#">Profile</a></p>
-									<p><a href="#">destination</a></p>
-									<p><a href="#">spacial packages</a></p>
-									<p><a href="#">special offers</a></p>
-									<p><a href="#">blog</a></p>
-									<p><a href="#">contacts</a></p>
+									 <p><a href="{{path('app_index')}}">Profile</a></p>
+
+										<p><a href='{{ path('hotel_index') }}'>Hotel</a></p>
+										<p><a href='{{ path('vol_index') }}'>Vol </a></p>
+										<p><a href='{{ path('reclamation_new') }}'>Reclamation</a></p>
+										<p><a href='{{ path('app_event') }}'>Events</a></p>
+										 <p><a href="{{path('app_login')}}">Login</a></p>
 								</div><!--/.single-footer-txt-->
 							</div><!--/.single-footer-item-->
 
@@ -1557,9 +1560,9 @@
 				<hr>
 				<div class="foot-icons ">
 					<ul class="footer-social-links list-inline list-unstyled">
-		                <li><a href="#" target="_blank" class="foot-icon-bg-1"><i class="fa fa-facebook"></i></a></li>
-		                <li><a href="#" target="_blank" class="foot-icon-bg-2"><i class="fa fa-twitter"></i></a></li>
-		                <li><a href="#" target="_blank" class="foot-icon-bg-3"><i class="fa fa-instagram"></i></a></li>
+		                <li><a href="https://www.facebook.com/" target="_blank" class="foot-icon-bg-1"><i class="fa fa-facebook"></i></a></li>
+		                <li><a href="https://www.twitter.com/" target="_blank" class="foot-icon-bg-2"><i class="fa fa-twitter"></i></a></li>
+		                <li><a href="https://www.instagram.com/" target="_blank" class="foot-icon-bg-3"><i class="fa fa-instagram"></i></a></li>
 		        	</ul>
 		        	<p>&copy; 2017 <a href="https://www.themesine.com">ThemeSINE</a>. All Right Reserved</p>
 

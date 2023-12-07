@@ -1,0 +1,76 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Voyage Organisé{% endblock %}
+
+{% block body %}
+	<section id="pack" class="packages">
+		<div class="container">
+			<div class="gallary-header text-center">
+				<h2>
+					Voyage Organisé
+				</h2>
+				<p>
+					Voyages Organisés Disponibles.
+				</p>
+			</div><!--/.gallery-header-->
+			<div class="packages-content">
+				<div class="row">
+					{% for voyage in voyages %}
+						<div class="col-md-4 col-sm-6">
+							<div class="single-package-item">
+								<!---->
+								
+								<img src="../uploads/{{ voyage.image }}" alt="package-place">
+								<div class="single-package-item-txt">
+									<h3>{{ voyage.destination }}<span class="pull-right">Prix :{{ voyage.prix }} Dt</span></h3>
+									<div class="packages-para">
+										<p>
+											<span>
+												<i class="fa fa-angle-right"></i> <td>date de départ :{{ voyage.dateDepart ? voyage.dateDepart|date('Y-m-d') : '' }}
+											</span>
+											<span>
+												<i class="fa fa-angle-right"></i> <td>Places Disponibles :{{ voyage.placeDisponible }}
+											</span>
+										</p>
+										<p>
+											<span>
+												<i class="fa fa-angle-right"></i> date de retour : {{ voyage.dateRetour ? voyage.dateRetour|date('Y-m-d') : '' }}
+											</span>
+											<span>
+												<i class="fa fa-angle-right"></i> guide de voyage :{{ voyage.guide}}
+											</span>
+
+										</p>
+									</div><!--/.packages-para-->
+									<div class="packages-review">
+										<p>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+											<i class="fa fa-star"></i>
+
+										</p>
+									</div><!--/.packages-review-->
+									<div class="about-btn">
+										<a href="{{ path('reserver_voyage', {'id': voyage.id}) }}"  class="about-view packages-btn">
+
+											book now
+										</a>
+									</div><!--/.about-btn-->
+								</div><!--/.single-package-item-txt-->
+							</div><!--/.single-package-item-->
+
+						</div><!--/.col-->
+					{% endfor %}
+
+
+				</div><!--/.row-->
+			</div><!--/.packages-content-->
+		</div><!--/.container-->
+
+	</section><!--/.packages-->
+	<!--packages end-->
+
+{% endblock %}
+

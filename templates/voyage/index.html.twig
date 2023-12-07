@@ -1,0 +1,60 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Voyage organisé{% endblock %}
+
+{% block body %}
+    <h1>Voyages organisés</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Destination</th>
+                <th>Prix</th>
+                <th>Itinéraire</th>
+                <th>Date_depart</th>
+                <th>Date_retour</th>
+                <th>image</th>
+                <th>Guide</th>
+<th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for voyage in voyages %}
+            <tr>
+                <td>{{ voyage.id }}</td>
+                <td>{{ voyage.destination }}</td>
+                <td>{{ voyage.prix }}</td>
+                <td>{{ voyage.getItineraire}}</td>
+                <td>{{ voyage.dateDepart ? voyage.dateDepart|date('Y-m-d') : '' }}</td>
+                <td>{{ voyage.dateRetour ? voyage.dateRetour|date('Y-m-d') : '' }}</td>
+                <td><img src="{{ asset('uploads/' ~ voyage.image) }}" class="img-fluid" height="100" width="125"></td>
+                <td>{{ voyage.guide }}</td>
+
+                <td>
+                    <button class="btn-success" style="border-radius: 4px">
+                        <a href="{{ path('app_voyage_show', {'id': voyage.id}) }}"
+
+                           style="color: white;text-decoration:none;padding: 8px;"
+                        >afficher</a>
+                    </button>
+
+                    <button class="btn-warning" style="border-radius: 4px">
+                        <a href="{{ path('app_voyage_edit', {'id': voyage.id}) }}"
+
+                           style="color: white;text-decoration:none;padding: 8px;"
+                        >modifier</a>
+                    </button>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_voyage_new') }}" class="btn btn-primary">Ajouter voyage</a>
+{% endblock %}

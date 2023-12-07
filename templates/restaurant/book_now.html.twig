@@ -1,0 +1,15 @@
+{# templates/hotel/book_now.html.twig #}
+
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Book Now{% endblock %}
+
+{% block body %}
+    <h1>Book Now - {{ Restaurant.nameRestaurant }}</h1>
+
+    {{ form_start(form) }}
+    {{ form_widget(form) }}
+
+  
+    {{ form_end(form) }}
+{% endblock %}

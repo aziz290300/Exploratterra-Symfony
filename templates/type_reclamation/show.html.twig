@@ -12,14 +12,13 @@
                 <td>{{ type_reclamation.id }}</td>
             </tr>
             <tr>
-                <th>Nom</th>
-                <td>{{ type_reclamation.nom }}</td>
+                <th>LibelleTypeReclamation</th>
+                <td>{{ type_reclamation.libelleTypeReclamation }}</td>
             </tr>
         </tbody>
     </table>
 
-
-   <a href="{{ path('app_type_reclamation_index') }}" class="btn btn-primary">Retour à la liste</a>
+    <a href="{{ path('app_type_reclamation_index') }}">back to list</a>
 
     <a href="{{ path('app_type_reclamation_edit', {'id': type_reclamation.id}) }}">edit</a>
 

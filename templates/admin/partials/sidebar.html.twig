@@ -11,7 +11,7 @@
     <hr class="sidebar-divider my-0">
 
     <li class="nav-item {{ macros.is_active('admin_dashboard') }}">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ path('app_stats') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Tableau de bord</span>
         </a>
@@ -48,21 +48,89 @@
 
         {# ------------------------------------------------------------------------------------------------------------------------------------------- #}
 
-
-
-
-    <hr class="sidebar-divider d-none d-md-block">
-
-
-    <li class="nav-item {{ macros.is_active('admin_user') }}">
-        
+  <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_list') }}">
             <i class="fas fa-user"></i>
-          
+            <span>ADMIN</span>
+        </a>
+        </li>
+        <li class="nav-item {{ macros.is_active('admin_user') }}">
+            <a class="nav-link" href="{{ path('app_type_reclamation_index') }}">
+                <i class="fas fa-user"></i>
+                <span>Type Reclamations</span>
+            </a>
+        </li>
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_reclamation_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Reclamations</span>
         </a>
     </li>
 
     <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_vol_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Vols</span>
+        </a>
+    </li>
+    
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_billet_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Billets</span>
+        </a>
+    </li> 
+    
+    
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_type_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Type Hotel et Restaurant</span>
+        </a>
+    </li>
+   
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_restaurant_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Restaurant</span>
+        </a>
+    </li>
+    
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_hotel_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Hotel</span>
+        </a>
+    </li>
+    
 
+    <hr class="sidebar-divider d-none d-md-block">
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_voyage_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Voyages organisés</span>
+        </a>
+    </li>
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_guide_index') }}">
+            <i class="fas fa-user"></i>
+            <span>Guides</span>
+        </a>
+    </li>
+     <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_contract') }}">
+            <i class="fas fa-user"></i>
+            <span>Contrat</span>
+        </a>
+    </li>
+    <li class="nav-item {{ macros.is_active('admin_user') }}">
+        <a class="nav-link" href="{{ path('app_invit') }}">
+            <i class="fas fa-user"></i>
+            <span>Contacts</span>
+        </a>
+    </li>
     <div class="text-center d-none d-md-inline">
         <button class="rounded-circle border-0" id="sidebarToggle"></button>
     </div>

@@ -1,0 +1,32 @@
+{# templates/hotel/book_now.html.twig #}
+
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Book Now - {{ vol.nomVol }}{% endblock %}
+
+{% block body %}
+    <h1>Book Now - {{ vol.nomVol }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ vol.id }}</td>
+            </tr>
+            <tr>
+                <th>NomVol</th>
+                <td>{{ vol.nomVol }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {{ form_start(form) }}
+  
+
+  
+
+    {{ form_row(form._token) }}
+    {{ form_end(form) }}
+
+    <a href="{{ path('app_vol_index') }}" class="btn btn-secondary">Back to List</a>
+{% endblock %}

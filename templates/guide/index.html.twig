@@ -1,0 +1,55 @@
+{% extends 'base-back.html.twig' %}
+
+
+{% block body %}
+    <h1 class="title">Liste des Guides</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Prenom</th>
+                <th>Nom</th>
+                <th>LangueParle</th>
+                <th>Disponiblite</th>
+                <th>Email</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for guide in guides %}
+            <tr>
+                <td>{{ guide.id }}</td>
+                <td>{{ guide.prenom }}</td>
+                <td>{{ guide.nom }}</td>
+                <td>{{ guide.langueParle }}</td>
+                <td>{{ guide.disponiblite }}</td>
+                <td>{{ guide.email }}</td>
+                <td>
+                    <button class="btn-success" style="border-radius: 4px">
+                        <a href="{{ path('app_guide_show', {'id': guide.id}) }}"
+
+                        style="color: white;text-decoration:none;padding: 8px;"
+                        >afficher</a>
+
+                    </button>
+                    <button class="btn-warning" style="border-radius: 4px">
+                        <a href="{{ path('app_guide_edit', {'id': guide.id}) }}"
+
+                           style="color: white;text-decoration:none;padding: 8px;"
+                        >modifier</a>
+
+                    </button>
+
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_guide_new') }}" class="btn btn-primary">Ajouter Guide</a>
+{% endblock %}

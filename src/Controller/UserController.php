@@ -123,7 +123,10 @@ public function add(Request $request, EntityManagerInterface $entityManager): Re
 
     // Vérifier si le formulaire a été soumis et est valide
     if ($form->isSubmitted() && $form->isValid()) {
-        // Ajouter l'utilisateur à la base de données
+        $user->setPassword($this->passwordEncoder->encodePassword($user, $user->getPassword()));
+
+        // Set their role
+        $user->setRoles(['ROLE_USER']);
         $entityManager->persist($user);
         $entityManager->flush();
 

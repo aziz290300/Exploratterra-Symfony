@@ -1,0 +1,6 @@
+# config/packages/knplabs_time.yaml
+
+knp_time:
+    default_locale: en
+    date:
+        default_format: "d/m/Y"

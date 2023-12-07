@@ -1,0 +1,39 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Categorie{% endblock %}
+
+{% block body %}
+    <h1>List Categorie</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for c in categories %}
+            <tr>
+                <td>{{ c.id }}</td>
+                <td>{{ c.nom }}</td>
+                <td>{{ c.description  }}</td>
+                
+
+                <td>
+                    <a href="{{ path('app_categorie_show', {'id': c.id}) }}">show</a>
+                    <a href="{{ path('app_categorie_edit', {'id': c.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_categorie_new') }}">Create new</a>
+{% endblock %}

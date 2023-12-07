@@ -1,0 +1,21 @@
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Contrat{% endblock %}
+
+{% block body %}
+    <h1>Contrat de voyage pour guide touristique</h1>
+{{ form_start(form) }}
+
+{{ form_row(form.nom, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(form.prenom, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(form.numero_de_CIN, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(form.Voyage, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(form.date_debut, {'attr': {'class': 'form-control'}}) }}
+
+
+{{ form_row(form.date_fin, {'attr': {'class': 'form-control'}}) }}
+{{ form_row(form.salaire, {'attr': {'class': 'form-control'}}) }}
+{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+{{ form_end(form) }}
+{% endblock %}

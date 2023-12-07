@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+
+{{ form_start(form) }}
+
+{{ form_row(form.nom) }}
+{{ form_row(form.prenom) }}
+{{ form_row(form.numero) }}
+
+{{ form_widget(form.submit, {'attr': {'class': 'btn btn-primary'}}) }}
+
+{{ form_end(form) }}
+{% endblock %}

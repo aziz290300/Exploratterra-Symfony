@@ -1,0 +1,38 @@
+{% extends 'base-back.html.twig' %}
+{% block title %} E-fit Admin Dashboard {% endblock %}
+
+{% block body %}
+
+
+
+
+   <!-- Content Row -->
+
+                <div class="row">
+
+                    <!-- Iheb CHART -->
+                    <div class="col-xl-6 col-lg-7">
+                      <div>Les Utilisateurs de E-FIT</div>
+                      
+                         <div id="eventChart"></div>
+
+                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                        <script type="text/javascript">
+                            {{ gc_draw(eventChart, 'eventChart') }}
+                        </script>
+                          
+                        </script>
+                    </div>
+                 
+                      </div> 
+          
+             
+            
+       
+
+                <!-- Content Row -->
+
+
+
+
+{% endblock %}

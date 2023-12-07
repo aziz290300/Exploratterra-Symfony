@@ -1,0 +1,29 @@
+{# templates/stats/index.html.twig #}
+
+{% extends 'base-back.html.twig' %}
+
+{% block title %}Statistics{% endblock %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="mb-4">Statistics <i class="fas fa-chart-bar"></i></h1>
+
+        <ul class="list-group">
+            <li class="list-group-item">
+                <i class="fas fa-hotel"></i> Number of Hotels: <span class="badge badge-primary">{{ hotelCount }}</span>
+            </li>
+            <li class="list-group-item">
+                <i class="fas fa-clipboard-check"></i> Number of Hotel Reservations: <span class="badge badge-success">{{ hotelReservationCount }}</span>
+            </li>
+            <li class="list-group-item">
+                <i class="fas fa-plane"></i> Number of Vol Reservations: <span class="badge badge-info">{{ volReservationCount }}</span>
+            </li>
+            <li class="list-group-item">
+                <i class="fas fa-utensils"></i> Number of Restaurant Reservations: <span class="badge badge-warning">{{ restaurantReservationCount }}</span>
+            </li>
+            <li class="list-group-item">
+                <i class="fas fa-exclamation-triangle"></i> Number of Reclamations: <span class="badge badge-danger">{{ reclamationCount }}</span>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

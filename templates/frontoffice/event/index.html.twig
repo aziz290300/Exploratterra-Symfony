@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Evenement{% endblock %}
+
+{% block body %}
+<section id="gallery" class="gallery">
+			<div class="container">
+				<div class="gallery-details">
+					<div class="gallary-header text-center">
+						<h2>
+							top Evenements
+						</h2>
+						<p>
+							{{ include('frontoffice/event/flasher.html.twig') }}  
+						</p>
+					</div><!--/.gallery-header-->
+					<div class="gallery-box">
+						<div class="gallery-content">
+						  	<div class="filtr-container">
+						  		<div class="row">
+                                {% for e in events %}
+						  			<div class="col-md-4">
+                                    
+						  				<div class="filtr-item">
+											<img src="../uploads/{{ e.image }}" class="img-fluid" alt="portfolio image"/>
+											<div class="item-title">
+												<a href="{{ path('app_event_details', {'id': e.id}) }}">
+													{{ e.nom }}
+												</a>
+												<p><span>{{ e.lieu}}</span><span>{{ e.placesDispo }}</span></p>
+											</div><!-- /.item-title -->
+										</div><!-- /.filtr-item -->
+						  			</div><!-- /.col -->
+{% endfor %}
+						  			
+
+						  		</div><!-- /.row -->
+
+						  	</div><!-- /.filtr-container-->
+						</div><!-- /.gallery-content -->
+					</div><!--/.galley-box-->
+				</div><!--/.gallery-details-->
+			</div><!--/.container-->
+
+		</section><!--/.gallery-->
+		<!--gallery end-->
+		
+{% endblock %}
