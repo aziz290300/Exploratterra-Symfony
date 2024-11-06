@@ -61,18 +61,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?array $roles = null;
     
 
-    /**
-     * @ORM\Column(type="string", length=500, nullable=true)
-     */
-    private ?string $reset_token=null;
-
-    /**
- * @ORM\Column(type="boolean")
- */
-private $enabled = true;
-
-// ...
-
 public function isEnabled(): bool
 {
     return $this->enabled;
